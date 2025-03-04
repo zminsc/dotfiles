@@ -11,8 +11,9 @@ config.font_size = 17.0
 config.background = {
   {
     source = {
-      File = wezterm.config_dir .. "/warawara.png",
+      File = wezterm.config_dir .. "/backgrounds/warawara.png",
     },
+    hsb = { brightness = 0.03 }
   },
 }
 
