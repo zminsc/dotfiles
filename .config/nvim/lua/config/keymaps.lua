@@ -21,5 +21,19 @@ vim.keymap.set('n', '<leader>sh', function() require("telescope.builtin").help_t
 -- nvim-cmp
 vim.keymap.set("i", "<C-n>", function() require("cmp").select_next_item({ behavior = require("cmp").SelectBehavior.Select }) end)
 vim.keymap.set("i", "<C-p>", function() require("cmp").select_prev_item({ behavior = require("cmp").SelectBehavior.Select }) end)
+
 vim.keymap.set("i", "<C-CR>", function() require("cmp").confirm({ select = true }) end)
+vim.keymap.set("i", "<Tab>", function()
+  local cmp = require("cmp")
+  local luasnip = require("luasnip")
+
+  if cmp.visible() then
+    cmp.confirm({ select = true })
+  elseif luasnip.expand_or_jumpable() then
+    luasnip.expand_or_jump()
+  else
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, true, true), "n", true)
+  end
+end)
+
 
