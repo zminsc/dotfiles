@@ -1,6 +1,6 @@
 -- Set indentation to 2
 vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = { "*.lua" },
+  pattern = { "*.lua", "*.css" },
   callback = function()
     vim.opt_local.shiftwidth = 2
     vim.opt_local.expandtab = true
