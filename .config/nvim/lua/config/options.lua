@@ -12,3 +12,6 @@ vim.opt.clipboard = "unnamedplus"
 
 -- Turn off hlsearch
 vim.opt.hlsearch = false
+
+-- Keep cursor at center of screen
+vim.opt.scrolloff = 999

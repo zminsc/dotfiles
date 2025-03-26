@@ -9,6 +9,15 @@ vim.keymap.set("n", "-", function() require("oil").open_float(vim.fn.expand("%:p
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
+-- Terminal
+vim.keymap.set("n", "<leader>gt", function()
+  vim.cmd("27 split")
+  vim.cmd("wincmd j")
+  vim.cmd("terminal")
+end, { desc = "[O]pen [T]erminal" })
+
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
+
 
 -- HACK: if a plugin isn't loaded yet, wrap the require("<plugin_name>") call in function()
 
@@ -19,8 +28,8 @@ vim.keymap.set('n', '<leader>sb', function() require("telescope.builtin").buffer
 vim.keymap.set('n', '<leader>sh', function() require("telescope.builtin").help_tags() end, { desc = "[S]earch [H]elp}" })
 
 -- nvim-cmp
-vim.keymap.set("i", "<C-n>", function() require("cmp").select_next_item({ behavior = require("cmp").SelectBehavior.Select }) end)
-vim.keymap.set("i", "<C-p>", function() require("cmp").select_prev_item({ behavior = require("cmp").SelectBehavior.Select }) end)
+vim.keymap.set("i", "<C-n>", function() require("cmp").select_next_item({ behavior = require("cmp").SelectBehavior.Insert }) end)
+vim.keymap.set("i", "<C-p>", function() require("cmp").select_prev_item({ behavior = require("cmp").SelectBehavior.Insert }) end)
 
 vim.keymap.set("i", "<C-CR>", function() require("cmp").confirm({ select = true }) end)
 vim.keymap.set("i", "<Tab>", function()
@@ -36,4 +45,8 @@ vim.keymap.set("i", "<Tab>", function()
   end
 end)
 
+-- obsidian.nvim (prefix: <leader>o for "[O]bsidian")
+vim.keymap.set("n", "<leader>oo", function() vim.cmd("ObsidianOpen") end, { desc = ":[O]bsidian[O]pen" })
+vim.keymap.set("n", "<leader>ot", function() vim.cmd("ObsidianTemplate") end, { desc = ":[O]bsidian[T]emplate" })
+vim.keymap.set("n", "<leader>on", function() vim.cmd("ObsidianNew") end, { desc = ":[O]bsidian[N]ew" })
 

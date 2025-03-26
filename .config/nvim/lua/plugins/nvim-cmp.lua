@@ -22,6 +22,7 @@ return {
         { name = "luasnip" },
       }, {
         { name = "buffer" },
+        { name = "path" },
       }),
       experimental = { ghost_text = true },
     })

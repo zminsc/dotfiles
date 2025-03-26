@@ -36,10 +36,13 @@ return {
     lspconfig.cssls.setup({ capabilities = capabilities })
     lspconfig.emmet_language_server.setup({
       capabilities = capabilities,
-      filetypes = { "html", "css" },
+      filetypes = { "html", "css", "javascript", "javascriptreact", "typescriptreact" },
       init_options = {
         showSuggestionsAsSnippets = true,
       },
     })
+
+    -- OCaml
+    lspconfig.ocamllsp.setup({ capabilities = capabilities })
   end,
 }
