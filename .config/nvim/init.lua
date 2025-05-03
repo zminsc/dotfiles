@@ -97,7 +97,11 @@ require("lazy").setup({
 			"stevearc/oil.nvim",
 			lazy = false, -- lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
 			dependencies = { "nvim-tree/nvim-web-devicons" }, -- optional
-			opts = {},
+			opts = {
+				keymaps = {
+					["_"] = false,
+				},
+			},
 			keys = {
 				{
 					"-",
