@@ -4,3 +4,6 @@ eval "$(starship init zsh)"
 
 # ocaml
 eval $(opam env)
+
+# ruby
+eval "$(rbenv init - --no-rehash bash)"

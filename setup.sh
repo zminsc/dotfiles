@@ -13,3 +13,14 @@ rm -rf "$HOME/.config/wezterm"
 sudo ln -svf "$(pwd)/.config/nvim" "$HOME/.config"
 sudo ln -svf "$(pwd)/.config/starship" "$HOME/.config"
 sudo ln -svf "$(pwd)/.config/wezterm" "$HOME/.config"
+
+# install Homebrew if it doesn't exist
+if ! command -v brew &> /dev/null; then
+  echo "Homebrew not found. Installing..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+  echo "Homebrew is already installed."
+fi
+
+# while personal website still uses Jekyll
+brew install --quiet rbenv
