@@ -149,6 +149,20 @@ require("lazy").setup({
 		{ -- treesitter
 			"nvim-treesitter/nvim-treesitter",
 			build = ":TSUpdate",
+			opts = {
+				ensure_installed = {
+					"lua",
+					"vim",
+					"vimdoc",
+					"markdown",
+					"markdown_inline",
+					"c",
+					"cpp",
+				},
+			},
+			config = function(_, opts)
+				require("nvim-treesitter.configs").setup(opts)
+			end,
 		},
 
 		{ -- fuzzy finder
@@ -194,7 +208,7 @@ require("lazy").setup({
 				dependencies = { "williamboman/mason.nvim" },
 				event = { "BufReadPre", "BufNewFile" },
 				opts = {
-					ensure_installed = { "lua_ls" },
+					ensure_installed = { "lua_ls", "clangd" },
 					automatic_installation = true,
 				},
 			},
@@ -282,6 +296,7 @@ require("lazy").setup({
 					format_on_save = { timeout_ms = 500, lsp_fallback = true },
 					formatters_by_ft = {
 						lua = { "stylua" },
+						cpp = { "clang_format" },
 					},
 				},
 			},
