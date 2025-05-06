@@ -6,4 +6,4 @@ eval "$(starship init zsh)"
 eval $(opam env)
 
 # ruby
-eval "$(rbenv init - --no-rehash bash)"
+eval "$(rbenv init - --no-rehash zsh)"
