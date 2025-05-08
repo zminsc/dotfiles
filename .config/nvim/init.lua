@@ -158,6 +158,7 @@ require("lazy").setup({
 					"markdown_inline",
 					"c",
 					"cpp",
+					"python",
 				},
 			},
 			config = function(_, opts)
@@ -208,7 +209,11 @@ require("lazy").setup({
 				dependencies = { "williamboman/mason.nvim" },
 				event = { "BufReadPre", "BufNewFile" },
 				opts = {
-					ensure_installed = { "lua_ls", "clangd" },
+					ensure_installed = {
+						"lua_ls",
+						"clangd",
+						"pyright",
+					},
 					automatic_installation = true,
 				},
 			},
@@ -297,6 +302,7 @@ require("lazy").setup({
 					formatters_by_ft = {
 						lua = { "stylua" },
 						cpp = { "clang_format" },
+						python = { "black" },
 					},
 				},
 			},
