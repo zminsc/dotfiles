@@ -159,6 +159,7 @@ require("lazy").setup({
 					"c",
 					"cpp",
 					"python",
+					"rust",
 				},
 			},
 			config = function(_, opts)
@@ -213,6 +214,7 @@ require("lazy").setup({
 						"lua_ls",
 						"clangd",
 						"pyright",
+						"rust_analyzer",
 					},
 					automatic_installation = true,
 				},
@@ -303,6 +305,7 @@ require("lazy").setup({
 						lua = { "stylua" },
 						cpp = { "clang_format" },
 						python = { "black" },
+						rust = { "rustfmt" },
 					},
 				},
 			},
