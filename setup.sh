@@ -1,4 +1,18 @@
 #!/usr/bin/env bash
+
+# Install oh-my-zsh if not present
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  echo "Installing oh-my-zsh..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/install.sh)" "" --unattended
+else
+  echo "oh-my-zsh is already installed."
+fi
+
+# Symlink custom directory
+rm -rf "$HOME/.oh-my-zsh/custom"
+ln -svf "$(pwd)/.oh-my-zsh/custom" "$HOME/.oh-my-zsh/"
+
+# Symlink .zshrc
 rm -rf "$HOME/.zshrc"
 ln -svf "$(pwd)/.zshrc" "$HOME/.zshrc"
 
