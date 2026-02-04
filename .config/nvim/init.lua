@@ -1,3 +1,7 @@
+-- MUST be set before setting up lazy.nvim
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 -- bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -14,10 +18,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	end
 end
 vim.opt.rtp:prepend(lazypath)
-
--- MUST be set before setting up lazy.nvim
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 
 -- line numbers
 vim.opt.number = true
@@ -55,35 +55,18 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
--- setup LSP-specific keybindings
-vim.api.nvim_create_autocmd("LspAttach", {
-	callback = function(ev)
-		local opts = { buffer = ev.buf }
-
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Go to definition" }))
-		vim.keymap.set("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", opts, { desc = "List references" }))
-		vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename symbol" }))
-	end,
-})
-
 -- setup lazy.nvim
 require("lazy").setup({
 	spec = {
-		{ -- colorscheme
-			"folke/tokyonight.nvim",
+		{ -- Dracula theme
+			"Mofiqul/dracula.nvim",
 			lazy = false,
-			priority = 1000, -- recommended for colorschemes
-			opts = {
-				transparent = true,
-				style = "storm",
-				styles = {
-					floats = "transparent",
-					sidebars = "transparent",
-				},
-			},
-			config = function(_, opts)
-				require("tokyonight").setup(opts)
-				vim.cmd([[colorscheme tokyonight]])
+			priority = 1000,
+			config = function()
+				require("dracula").setup({
+					transparent_bg = true,
+				})
+				vim.cmd([[colorscheme dracula]])
 			end,
 		},
 
@@ -126,77 +109,18 @@ require("lazy").setup({
 					},
 				},
 			},
-			{
-				"NeogitOrg/neogit",
-				dependencies = {
-					"nvim-lua/plenary.nvim",
-					"sindrets/diffview.nvim", -- optional, diff integration
-					"nvim-telescope/telescope.nvim", -- optional
-				},
-				opts = {},
-				keys = {
-					{
-						"<leader>g",
-						function()
-							require("neogit").open()
-						end,
-						desc = "Open Neogit",
-					},
-				},
-			},
 		},
 
 		{ -- treesitter
 			"nvim-treesitter/nvim-treesitter",
 			build = ":TSUpdate",
 			opts = {
-				ensure_installed = {
-					"lua",
-					"vim",
-					"vimdoc",
-					"markdown",
-					"markdown_inline",
-					"c",
-					"cpp",
-					"python",
-					"rust",
-				},
+				ensure_installed = { "lua", "vim" },
+				auto_install = true,
 			},
 			config = function(_, opts)
 				require("nvim-treesitter.configs").setup(opts)
 			end,
-		},
-
-		{ -- fuzzy finder
-			"nvim-telescope/telescope.nvim",
-			tag = "0.1.8",
-			dependencies = {
-				"nvim-lua/plenary.nvim",
-				"nvim-treesitter/nvim-treesitter",
-			},
-			keys = {
-				{
-					"<leader>ff",
-					function()
-						require("telescope.builtin").find_files()
-					end,
-					desc = "Find files",
-				},
-				{
-					"<leader>fg",
-					function()
-						require("telescope.builtin").live_grep()
-					end,
-					desc = "Find by live grep",
-				},
-				{
-					"<leader>fw",
-					function()
-						require("telescope.builtin").grep_string()
-					end,
-					desc = "Find word under cursor",
-				},
-			},
 		},
 
 		{ -- LSP
@@ -210,12 +134,7 @@ require("lazy").setup({
 				dependencies = { "williamboman/mason.nvim" },
 				event = { "BufReadPre", "BufNewFile" },
 				opts = {
-					ensure_installed = {
-						"lua_ls",
-						"clangd",
-						"pyright",
-						"rust_analyzer",
-					},
+					ensure_installed = { "lua_ls" },
 					automatic_installation = true,
 				},
 			},
@@ -229,10 +148,13 @@ require("lazy").setup({
 				config = function()
 					local lspconfig = require("lspconfig")
 					local mason_lspconfig = require("mason-lspconfig")
+					local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 					mason_lspconfig.setup_handlers({
 						function(server)
-							lspconfig[server].setup({})
+							lspconfig[server].setup({
+								capabilities = capabilities,
+							})
 						end,
 					})
 				end,
@@ -288,9 +210,6 @@ require("lazy").setup({
 					},
 				})
 
-				-- let every LSP advertise cmp completion capability
-				local capabilities = require("cmp_nvim_lsp").default_capabilities()
-				require("lspconfig").lua_ls.setup({ capabilities = capabilities })
 			end,
 		},
 
@@ -304,8 +223,9 @@ require("lazy").setup({
 					formatters_by_ft = {
 						lua = { "stylua" },
 						cpp = { "clang_format" },
-						python = { "black" },
+						python = { "ruff" },
 						rust = { "rustfmt" },
+						systemverilog = { "verible" },
 					},
 				},
 			},
@@ -333,20 +253,6 @@ require("lazy").setup({
 				opts = {
 					library = {
 						{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
-					},
-				},
-			},
-			{ -- keymap hints
-				"folke/which-key.nvim",
-				event = "VeryLazy",
-				opts = {},
-				keys = {
-					{
-						"<leader>?",
-						function()
-							require("which-key").show({ global = false })
-						end,
-						desc = "Buffer Local Keymaps (which-key)",
 					},
 				},
 			},
