@@ -84,6 +84,9 @@ require("lazy").setup({
 				keymaps = {
 					["_"] = false,
 				},
+				preview_win = {
+					preview_method = "load",
+				},
 			},
 			keys = {
 				{
@@ -121,6 +124,35 @@ require("lazy").setup({
 			config = function(_, opts)
 				require("nvim-treesitter.configs").setup(opts)
 			end,
+		},
+
+		{ -- markdown rendering
+			"MeanderingProgrammer/render-markdown.nvim",
+			dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.nvim" },
+			config = function(_, opts)
+				vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { bg = "#24273A", fg = "#8AADF4" })
+				vim.api.nvim_set_hl(0, "RenderMarkdownH2Bg", { bg = "#2C282C", fg = "#E5C890" })
+				vim.api.nvim_set_hl(0, "RenderMarkdownH3Bg", { bg = "#2A322F", fg = "#A6DA95" })
+				vim.api.nvim_set_hl(0, "RenderMarkdownH4Bg", { bg = "#1C2930", fg = "#8BD5CA" })
+				vim.api.nvim_set_hl(0, "RenderMarkdownH5Bg", { bg = "#2B2738", fg = "#C6A0F6" })
+				vim.api.nvim_set_hl(0, "RenderMarkdownH6Bg", { bg = "#292739", fg = "#B7A1F4" })
+
+				vim.api.nvim_set_hl(0, "RenderMarkdownH1", { fg = "#8AADF4" })
+				vim.api.nvim_set_hl(0, "RenderMarkdownH2", { fg = "#E5C890" })
+				vim.api.nvim_set_hl(0, "RenderMarkdownH3", { fg = "#A6DA95" })
+				vim.api.nvim_set_hl(0, "RenderMarkdownH4", { fg = "#8BD5CA" })
+				vim.api.nvim_set_hl(0, "RenderMarkdownH5", { fg = "#C6A0F6" })
+				vim.api.nvim_set_hl(0, "RenderMarkdownH6", { fg = "#B7A1F4" })
+
+				require("render-markdown").setup(opts)
+			end,
+			opts = {
+				heading = {
+					sign = false,
+					position = "inline",
+				},
+				render_modes = true,
+			},
 		},
 
 		{ -- LSP
@@ -209,7 +241,6 @@ require("lazy").setup({
 						ghost_text = { hl_group = "Comment" },
 					},
 				})
-
 			end,
 		},
 
@@ -226,6 +257,7 @@ require("lazy").setup({
 						python = { "ruff" },
 						rust = { "rustfmt" },
 						systemverilog = { "verible" },
+						markdown = { "prettier" },
 					},
 				},
 			},
