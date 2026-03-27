@@ -38,14 +38,9 @@ alias gs="git status"
 alias gr="git restore"
 alias grs="git restore --staged"
 
-alias prof="nvim ~/.zshrc"
-alias refresh="source ~/.zshrc"
-alias bujo="cd ~/Bujo && nvim ."
-alias nvconf="cd ~/.config/nvim && nvim ."
-
 # ----------
 # Local .zshrc
 # ----------
-if [ -f .zshrc.local ]; then
-  source .zshrc.local
+if [ -f ~/.zshrc.local ]; then
+  source ~/.zshrc.local
 fi
