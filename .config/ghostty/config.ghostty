@@ -1,0 +1,9 @@
+# Styling
+theme = "TokyoNight Night"
+font-size = "17"
+
+shell-integration-features = "no-cursor"
+cursor-style = "block"
+
+# Keybinds
+keybind = "global:cmd+backquote=toggle_quick_terminal"
