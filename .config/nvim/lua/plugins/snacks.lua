@@ -20,6 +20,13 @@ return {
 			desc = "Smart Find Files",
 		},
 		{
+			"<leader>,",
+			function()
+				Snacks.picker.buffers()
+			end,
+			desc = "Buffers",
+		},
+		{
 			"<leader>/",
 			function()
 				Snacks.picker.grep()
