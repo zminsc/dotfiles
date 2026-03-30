@@ -3,11 +3,21 @@ return {
 	priority = 1000,
 	lazy = false,
 	opts = {
-		explorer = { replace_netrw = true },
+		explorer = {
+			replace_netrw = true,
+		},
 		indent = {},
 		picker = {
 			sources = {
-				explorer = {},
+				explorer = {
+					win = {
+						list = {
+							keys = {
+								["o"] = "explorer_add",
+							},
+						},
+					},
+				},
 			},
 		},
 	},
