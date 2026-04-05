@@ -41,6 +41,13 @@ vim.pack.add({
 
 vim.cmd.colorscheme("tokyonight-night")
 
+-- treesitter --
+
+require("nvim-treesitter").install({
+	"lua",
+	"typescript",
+})
+
 -- lsp --
 
 require("mason").setup()
@@ -62,6 +69,7 @@ require("conform").setup({
 		lua = { "stylua" },
 		markdown = { "prettierd" },
 		javascript = { "prettierd" },
+		typescript = { "prettierd" },
 	},
 })
 
