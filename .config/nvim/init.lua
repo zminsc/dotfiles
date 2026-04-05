@@ -200,11 +200,14 @@ vim.api.nvim_create_autocmd("QuitPre", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-	-- wrap text for markdown files
+	-- wrap text, allow folding for markdown files
 	pattern = "markdown",
 	callback = function()
 		vim.opt_local.textwidth = 80
 		vim.opt_local.wrap = true
 		vim.opt_local.linebreak = true
+		vim.opt_local.foldmethod = "expr"
+		vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+		vim.opt_local.foldlevel = 99
 	end,
 })
