@@ -165,6 +165,8 @@ vim.keymap.set("n", "-", Snacks.explorer.open)
 -- keymaps --
 
 vim.keymap.set("n", "<leader>t", "<C-^>", { noremap = true, desc = "Toggle to alternate buffer" })
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
+vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 
 -- autocmds --
 
