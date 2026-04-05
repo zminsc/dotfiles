@@ -198,3 +198,13 @@ vim.api.nvim_create_autocmd("QuitPre", {
 		end
 	end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+	-- wrap text for markdown files
+	pattern = "markdown",
+	callback = function()
+		vim.opt_local.textwidth = 80
+		vim.opt_local.wrap = true
+		vim.opt_local.linebreak = true
+	end,
+})
