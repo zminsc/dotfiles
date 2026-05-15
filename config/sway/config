@@ -1,0 +1,175 @@
+# ~/.config/sway/config
+
+### Variables
+
+    # Mod4 = logo key
+    set $mod Mod4
+
+    # Vim motions (for navigation)
+    set $left h
+    set $down j
+    set $up k
+    set $right l
+
+### Output configuration
+
+    # Set the same background wallpaper across all outputs
+    output * bg /home/zminsc/Pictures/Wallpapers/SaintFranks1920x1080.png fill
+
+    # Settings for primary display monitor
+    output eDP-1 {
+        scale 1.25
+    }
+
+### Input configuration
+
+    # Keyboard settings
+    input type:keyboard xkb_options ctrl:nocaps
+
+    # Touchpad settings
+    input type:touchpad { natural_scroll enabled }
+
+    # Mouse settings (wired)
+    input "1130:820:Compx_Cherry_XTRFY_M68_Wireless" {
+        accel_profile "flat"
+        pointer_accel -0.25
+    }
+
+    # Mouse settings (wireless receiver)
+    input "1130:816:Compx_Cherry_XTRFY_1K_Mouse_Receiver" {
+        accel_profile "flat"
+        pointer_accel -0.25
+    }
+
+### Key bindings
+
+    # Start a terminal
+    bindsym $mod+Return exec XDG_CURRENT_DESKTOP=none kitty --single-instance
+
+    # Kill focused window
+    bindsym $mod+w kill
+
+    # Toggle your launcher
+    bindsym $mod+d exec pkill -x tofi-drun || (tofi-drun | xargs swaymsg exec)
+
+    # Set default layout
+    bindsym $mod+e layout default
+
+    # Set stacked layout
+    bindsym $mod+s layout stacking
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+    # Reload the configuration file
+    bindsym $mod+Shift+c reload
+
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+
+    # Switch to workspace
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+
+    # Switch to most recent workspace
+    bindsym $mod+Tab workspace back_and_forth
+
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+Shift+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+space focus mode_toggle
+
+### Assign particular windows to particular spaces
+
+    for_window [app_id="Actual"] move container to workspace 4, workspace 4
+    for_window [class="discord"] move container to workspace 4, workspace 4
+
+### Resize mode
+
+    bindsym $mod+r mode "resize"
+
+    mode "resize" {
+        bindsym $left resize shrink width 10px
+        bindsym $down resize grow height 10px
+        bindsym $up resize shrink height 10px
+        bindsym $right resize grow width 10px
+
+        # Return to default mode
+        bindsym Return mode "default"
+    }
+
+### Utilities
+
+    # Special keys to adjust volume via PulseAudio
+    bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
+    bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
+    bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
+    bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+
+    # Special keys to adjust brightness via brightnessctl
+    bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+    bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+
+    # Special key to take a screenshot with grim
+    bindsym Print exec grim - | wl-copy
+    bindsym $mod+Print exec grim "$HOME/Pictures/Screenshots/Screenshot on $(date +'%Y-%m-%d at %H:%M:%S').png"
+
+### Autotiling
+
+    exec_always autotiling
+
+### UI
+
+    # Windows
+    gaps inner 8
+    default_border pixel 2
+
+    # Window colors (Tokyo Night)
+    client.focused           #7aa2f7 #7aa2f7 #1a1b26 #73daca #7aa2f7
+    client.focused_inactive  #414868 #292e42 #c0caf5 #545c7e #292e42
+    client.focused_tab_title #414868 #292e42 #c0caf5
+    client.unfocused         #292e42 #1a1b26 #545c7e #292e42 #1a1b26
+    client.urgent            #f7768e #db4b4b #1a1b26 #db4b4b #db4b4b
+    client.placeholder       #000000 #0c0c0c #c0caf5 #000000 #0c0c0c
+    client.background        #1a1b26
+
+    # Status Bar
+    # Read `man 5 sway-bar` for more information about this section.
+    bar {
+        swaybar_command waybar
+    }
+
+include /etc/sway/config.d/*
